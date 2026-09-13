@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Dates</title>
+
+  <!-- EB Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    /* ========================================
+       RESET
+    ======================================== */
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    body {
+      background: #eee7e1;
+      color: #5A5161;
+
+      font-family: "EB Garamond", serif;
+    }
+
+
+    /* ========================================
+       PAGE
+    ======================================== */
+
+    .page {
+      position: relative;
+
+      width: 100%;
+      min-height: 1650px;
+
+      padding-top: 105px;
+      padding-bottom: 150px;
+    }
+
+
+    /* ========================================
+       NAVIGATION
+    ======================================== */
+
+    .top-nav {
+      position: absolute;
+      top: 32px;
+      left: 38px;
+
+      display: flex;
+      align-items: center;
+      gap: 42px;
+
+      z-index: 20;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+    }
+
+    .back-link img {
+      width: 36px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(90, 81, 97, 0.45);
+      margin-left: -20px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #857986;
+
+      font-size: 17px;
+      font-style: italic;
+
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 0.55;
+    }
+
+
+    /* ========================================
+       TIMELINE
+    ======================================== */
+
+    .timeline {
+      position: relative;
+
+      width: 760px;
+
+      margin: 0 auto;
+    }
+
+
+    /* ========================================
+       YEAR HEADERS
+    ======================================== */
+
+    .year-block {
+      margin-bottom: 70px;
+    }
+
+    .year-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      gap: 16px;
+
+      margin-bottom: 24px;
+
+      font-size: 22px;
+      font-weight: 400;
+    }
+
+    .year-line {
+      width: 55px;
+      height: 1px;
+
+      background: rgba(90, 81, 97, 0.35);
+    }
+
+
+    /* ========================================
+       YEAR TIMELINE LINE
+    ======================================== */
+
+    .year-content {
+      position: relative;
+    }
+
+    .timeline-line {
+      position: absolute;
+
+      top: 0;
+      bottom: 0;
+
+      left: 50%;
+
+      width: 1px;
+
+      transform: translateX(-50%);
+
+      background: #5A5161;
+    }
+
+    /* Extend ONLY the 2026 timeline down to TODAY */
+    .year-block:last-of-type .timeline-line {
+        bottom: -70px;
+        margin-bottom: 0px;
+    }
+
+    .today-section {
+        position: relative;
+        text-align: center;
+
+        margin-top: 100px;
+    }
+
+    .year-2026 {
+        margin-bottom: 0;
+    }
+
+    .year-2026 .year-content {
+        padding-bottom: 40px;
+    }
+
+
+
+
+    /* ========================================
+       EVENTS
+    ======================================== */
+
+    .event {
+      position: relative;
+
+      display: grid;
+
+      grid-template-columns:
+        359px
+        42px
+        359px;
+
+      width: 760px;
+
+      min-height: 130px;
+
+      align-items: center;
+
+      margin-bottom: 28px;
+    }
+
+
+    /* TIMELINE DOT */
+
+    .event-dot {
+      grid-column: 2;
+
+      width: 10px;
+      height: 10px;
+
+      justify-self: center;
+
+      background: #5A5161;
+
+      border-radius: 50%;
+
+      z-index: 5;
+    }
+
+
+    /* ========================================
+       LEFT EVENTS
+    ======================================== */
+
+    .event-left {
+      position: relative;
+
+      grid-column: 1;
+
+      width: 100%;
+      height: 130px;
+    }
+
+
+    /* left-side photo */
+
+    .event-left .polaroid {
+      position: absolute;
+
+      left: -45px;  /* moves larger photo slightly outward */
+      top: 50%;
+
+      transform:
+        translateY(-50%)
+        rotate(-2deg);
+    }
+
+
+    /* left-side text
+
+       IMPORTANT:
+       every left event begins at exactly
+       the same horizontal position
+    */
+
+    .event-left .event-text {
+      position: absolute;
+
+      left: 135px;
+      top: 50%;
+
+      width: 215px;
+
+      transform: translateY(-50%);
+
+      text-align: left;
+    }
+
+
+    /* ========================================
+       RIGHT EVENTS
+    ======================================== */
+
+    .event-right {
+      position: relative;
+
+      grid-column: 3;
+
+      width: 100%;
+      height: 130px;
+    }
+
+
+    /* right-side text
+
+       IMPORTANT:
+       every right event begins at exactly
+       the same horizontal position
+    */
+
+    .event-right .event-text {
+      position: absolute;
+
+      left: 12px;
+      top: 50%;
+
+      width: 215px;
+
+      transform: translateY(-50%);
+
+      text-align: left;
+    }
+
+
+    /* right-side photo */
+
+    .event-right .polaroid {
+      position: absolute;
+
+      right: 0;
+      top: 50%;
+
+      transform:
+        translateY(-50%)
+        rotate(2deg);
+    }
+
+
+    /* ========================================
+       POLAROIDS
+    ======================================== */
+
+    .polaroid {
+      display: block;
+
+      width: 150px;
+      height: auto;
+    }
+
+
+    /* individual rotation options */
+
+    .straight {
+      transform: translateY(-50%) rotate(0deg) !important;
+    }
+
+    .tilt-left {
+      transform: translateY(-50%) rotate(-3deg) !important;
+    }
+
+    .tilt-right {
+      transform: translateY(-50%) rotate(3deg) !important;
+    }
+
+
+    /* ========================================
+       EVENT TEXT
+    ======================================== */
+
+    .event-date {
+      font-size: 20px;
+      font-weight: 500;
+
+      line-height: 1.05;
+
+      text-transform: uppercase;
+
+      white-space: nowrap;
+    }
+
+    .event-note {
+      margin-top: 4px;
+
+      color: #847985;
+
+      font-size: 17px;
+      font-style: italic;
+
+      line-height: 1.1;
+    }
+
+    .event-location {
+      display: flex;
+      align-items: center;
+
+      gap: 7px;
+
+      margin-top: 8px;
+
+      color: #847985;
+
+      font-size: 16px;
+      font-style: italic;
+
+      line-height: 1;
+    }
+
+    .pin {
+      font-style: normal;
+      font-size: 16px;
+    }
+
+
+    /* ========================================
+       TODAY
+    ======================================== */
+
+    .today-section {
+      position: relative;
+
+      text-align: center;
+
+      margin-top: 0;
+    }
+
+    .today-dot {
+      width: 10px;
+      height: 10px;
+
+      margin: 0 auto 16px;
+
+      background: #5A5161;
+
+      border-radius: 50%;
+    }
+
+    .today-title {
+      font-size: 23px;
+      font-weight: 400;
+
+      text-transform: uppercase;
+    }
+
+    .today-note {
+      margin-top: 3px;
+
+      color: #847985;
+
+      font-size: 17px;
+      font-style: italic;
+    }
+
+    .today-location {
+      margin-top: 8px;
+
+      color: #847985;
+
+      font-size: 16px;
+      font-style: italic;
+    }
+
+
+    /* ========================================
+       FUTURE LINE
+    ======================================== */
+
+    .future-line {
+      position: relative;
+
+      width: 1px;
+      height: 80px;
+
+      margin: 18px auto 0;
+
+      background: #5A5161;
+    }
+
+    .future-heart {
+      position: absolute;
+
+      top: -10px;
+      left: 50%;
+
+      padding: 0 5px;
+
+      transform: translateX(-50%);
+
+      background: #eee7e1;
+
+      color: #5A5161;
+
+      font-size: 18px;
+    }
+
+    .future-circle {
+      position: absolute;
+
+      left: 50%;
+      bottom: -6px;
+
+      width: 11px;
+      height: 11px;
+
+      transform: translateX(-50%);
+
+      background: #eee7e1;
+
+      border: 1px solid #5A5161;
+      border-radius: 50%;
+    }
+
+
+    /* ========================================
+       FUTURE EVENT
+    ======================================== */
+
+    .future-event {
+      margin-top: 25px;
+
+      text-align: center;
+    }
+
+    .future-date {
+      font-size: 21px;
+      font-weight: 500;
+
+      text-transform: uppercase;
+    }
+
+    .future-note {
+      margin-top: 4px;
+
+      color: #847985;
+
+      font-size: 17px;
+      font-style: italic;
+    }
+
+    .future-location {
+      margin-top: 8px;
+
+      color: #847985;
+
+      font-size: 16px;
+      font-style: italic;
+    }
+
+
+    /* ========================================
+       FOOTER
+    ======================================== */
+
+    .footer-location {
+      position: absolute;
+
+      bottom: 30px;
+
+      color: #5A5161;
+
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .footer-location strong {
+      display: block;
+
+      font-weight: 600;
+    }
+
+    .bella-footer {
+      left: 28px;
+    }
+
+    .alex-footer {
+      right: 28px;
+
+      text-align: right;
+    }
+
+
+    /* ========================================
+       FOOTER CENTER
+    ======================================== */
+
+    .footer-center {
+      position: absolute;
+
+      left: 50%;
+      bottom: 33px;
+
+      width: 46%;
+
+      transform: translateX(-50%);
+
+      display: flex;
+      align-items: center;
+
+      gap: 20px;
+    }
+
+    .footer-line {
+      flex: 1;
+
+      height: 1px;
+
+      background: rgba(90, 81, 97, 0.35);
+    }
+
+    .globe-icon {
+      display: block;
+
+      width: 28px;
+      height: auto;
+
+      opacity: 0.45;
+    }
+
+
+    /* ========================================
+       SMALLER SCREENS
+    ======================================== */
+
+    @media (max-width: 900px) {
+
+      .timeline {
+        transform: scale(0.85);
+        transform-origin: top center;
+      }
+
+      .top-nav {
+        gap: 25px;
+      }
+
+      .nav-link {
+        font-size: 15px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+<main class="page">
+
+
+  <!-- =====================================
+       NAVIGATION
+  ====================================== -->
+
+  <nav class="top-nav">
+
+    <a href="index.html" class="back-link">
+      <img src="back.png" alt="Back">
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <a href="map.html" class="nav-link">
+      our map
+    </a>
+
+    <a href="letters.html" class="nav-link">
+      open when...
+    </a>
+
+
+    <a href="dates.html" class="nav-link">
+      dates
+    </a>
+
+  </nav>
+
+
+
+  <!-- =====================================
+       TIMELINE
+  ====================================== -->
+
+  <section class="timeline">
+
+
+    <!-- =====================================
+         2024
+    ====================================== -->
+
+    <div class="year-block">
+
+      <div class="year-title">
+
+        <div class="year-line"></div>
+
+        <span>2024</span>
+
+        <div class="year-line"></div>
+
+      </div>
+
+
+      <div class="year-content">
+
+        <div class="timeline-line"></div>
+
+
+        <!-- JUNE 20 -->
+
+        <div class="event">
+
+          <div class="event-left">
+
+            <img
+              src="june20.png"
+              class="polaroid tilt-left"
+              alt=""
+            >
+
+            <div class="event-text">
+
+              <div class="event-date">
+                June 20, 2024
+              </div>
+
+              <div class="event-note">
+                the day we met
+              </div>
+
+              <div class="event-location">
+                <span class="pin">♡</span>
+                <span>Prem</span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="event-dot"></div>
+
+        </div>
+
+
+
+        <!-- JULY 1 -->
+
+        <div class="event">
+
+          <div class="event-dot"></div>
+
+          <div class="event-right">
+
+            <div class="event-text">
+
+              <div class="event-date">
+                July 1, 2024
+              </div>
+
+              <div class="event-note">
+                our first lunch together
+              </div>
+
+              <div class="event-location">
+                <span class="pin">♡</span>
+                <span>NAMI NAMI</span>
+              </div>
+
+            </div>
+
+            <img
+              src="july1.png"
+              class="polaroid straight"
+              alt=""
+            >
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DECEMBER 25 -->
+
+        <div class="event">
+
+          <div class="event-left">
+
+            <img
+              src="dec25-2024.png"
+              class="polaroid straight"
+              alt=""
+            >
+
+            <div class="event-text">
+
+              <div class="event-date">
+                December 25, 2024
+              </div>
+
+              <div class="event-note">
+                our first Christmas date
+              </div>
+
+              <div class="event-location">
+                <span class="pin">♡</span>
+                <span>Grand Hyatt Seoul</span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="event-dot"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         2025
+    ====================================== -->
+
+    <div class="year-block">
+
+      <div class="year-title">
+
+        <div class="year-line"></div>
+
+        <span>2025</span>
+
+        <div class="year-line"></div>
+
+      </div>
+
+
+      <div class="year-content">
+
+        <div class="timeline-line"></div>
+
+
+        <!-- MARCH 11 -->
+
+        <div class="event">
+
+          <div class="event-dot"></div>
+
+          <div class="event-right">
+
+            <div class="event-text">
+
+              <div class="event-date">
+                March 11, 2025
+              </div>
+
+              <div class="event-note">
+                our first(?) day 1
+              </div>
+
+              <div class="event-location">
+                <span class="pin">♡</span>
+                <span>Your playground</span>
+              </div>
+
+            </div>
+
+            <img
+              src="march11.png"
+              class="polaroid tilt-right"
+              alt=""
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         2026
+    ====================================== -->
+
+    <div class="year-block year-2026">
+
+      <div class="year-title">
+
+        <div class="year-line"></div>
+
+        <span>2026</span>
+
+        <div class="year-line"></div>
+
+      </div>
+
+
+      <div class="year-content">
+
+        <div class="timeline-line"></div>
+
+
+        <!-- MARCH 28 -->
+
+        <div class="event">
+
+          <div class="event-left">
+
+            <img
+              src="march28.png"
+              class="polaroid tilt-left"
+              alt=""
+            >
+
+            <div class="event-text">
+
+              <div class="event-date">
+                March 28, 2026
+              </div>
+
+              <div class="event-note">
+                my birthday party
+              </div>
+
+              <div class="event-location">
+                <span class="pin">♡</span>
+                <span>People the Terrace</span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="event-dot"></div>
+
+        </div>
+
+
+
+        <!-- AUGUST 22 -->
+
+        <div class="event">
+
+          <div class="event-dot"></div>
+
+          <div class="event-right">
+
+            <div class="event-text">
+
+              <div class="event-date">
+                August 22, 2026
+              </div>
+
+              <div class="event-note">
+                the orange incident
+              </div>
+
+              <div class="event-location">
+                <span class="pin">♡</span>
+                <span>Orange</span>
+              </div>
+
+            </div>
+
+            <img
+              src="aug22.png"
+              class="polaroid straight"
+              alt=""
+            >
+
+          </div>
+
+        </div>
+
+
+
+        <!-- AUGUST 31 -->
+
+        <div class="event">
+
+          <div class="event-left">
+
+            <img
+              src="aug31.png"
+              class="polaroid tilt-left"
+              alt=""
+            >
+
+            <div class="event-text">
+
+              <div class="event-date">
+                August 31, 2026
+              </div>
+
+              <div class="event-note">
+                our second day 1
+              </div>
+
+              <div class="event-location">
+                <span class="pin">♡</span>
+                <span>Galleria</span>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="event-dot"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         TODAY
+    ====================================== -->
+
+    <div class="today-section">
+
+      <div class="today-dot"></div>
+
+      <div class="today-title">
+        Today
+      </div>
+
+      <div class="today-note">
+        long distance
+      </div>
+
+      <div class="today-location">
+        ♡ D.C. &amp; Seoul
+      </div>
+
+
+
+      <!-- FUTURE -->
+
+      <div class="future-line">
+
+        <div class="future-heart">
+          ♡
+        </div>
+
+        <div class="future-circle"></div>
+
+      </div>
+
+
+      <div class="future-event">
+
+        <div class="future-date">
+          December 25, 2026
+        </div>
+
+        <div class="future-note">
+          our third and most special Christmas together
+        </div>
+
+        <div class="future-location">
+          ♡ TBD
+        </div>
+
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+
+  <!-- =====================================
+       FOOTER
+  ====================================== -->
+
+  <div class="footer-location bella-footer">
+
+    <strong>
+      Bella's location
+    </strong>
+
+    <span>
+      37.5374° N, 127.0590° E
+    </span>
+
+  </div>
+
+
+
+  <div class="footer-center">
+
+    <div class="footer-line"></div>
+
+    <img
+      src="globe.png"
+      class="globe-icon"
+      alt=""
+    >
+
+    <div class="footer-line"></div>
+
+  </div>
+
+
+
+  <div class="footer-location alex-footer">
+
+    <strong>
+      Alex's location
+    </strong>
+
+    <span>
+      39.0334° N, 77.1091° W
+    </span>
+
+  </div>
+
+
+</main>
+
+</body>
+</html>

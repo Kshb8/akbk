@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Open When...</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      overflow: hidden;
+      background: #eee7e1;
+      color: #5A5161;
+      font-family: "EB Garamond", serif;
+    }
+
+    .page {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-width: 1100px;
+      min-height: 700px;
+    }
+
+
+    /* =========================
+       NAV
+    ========================= */
+
+    .top-nav {
+      position: absolute;
+      top: 32px;
+      left: 38px;
+
+      display: flex;
+      align-items: center;
+      gap: 42px;
+
+      z-index: 30;
+    }
+
+    .back-link img {
+      width: 36px;
+      display: block;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(90, 81, 97, 0.45);
+      margin-left: -20px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #857986;
+      font-size: 17px;
+      font-style: italic;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 0.55;
+    }
+
+
+    /* =========================
+       LETTER GRID
+    ========================= */
+
+    .letter-grid {
+      position: absolute;
+
+      left: 50%;
+      top: 49%;
+
+      transform: translate(-50%, -50%);
+
+      width: 81vw;
+      max-width: 1260px;
+
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+
+      column-gap: 135px;
+      row-gap: 95px;
+
+      align-items: center;
+      justify-items: center;
+
+      transition:
+        opacity 0.35s ease,
+        filter 0.35s ease,
+        transform 0.35s ease;
+    }
+
+    .letter-item {
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+
+      transition:
+        transform 0.25s ease,
+        filter 0.25s ease,
+        opacity 0.25s ease;
+    }
+
+    .letter-item img {
+      width: 325px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .letter-item:hover {
+      transform: translateY(-7px) scale(1.02);
+      filter: brightness(1.03);
+    }
+
+    .letter-item:active {
+      transform: translateY(-2px) scale(0.99);
+    }
+
+
+    /* dimmed state when letter is open */
+
+    .page.letter-open .letter-grid {
+      opacity: 0.18;
+      filter: blur(1px);
+      transform: translate(-50%, -50%) scale(0.985);
+      pointer-events: none;
+    }
+
+
+    /* =========================
+       LETTER OVERLAY
+    ========================= */
+
+    .letter-overlay {
+      position: fixed;
+      inset: 0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background: rgba(238, 231, 225, 0.18);
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      z-index: 50;
+
+      transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+    }
+
+    .letter-overlay.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+
+    /* =========================
+       PAPER
+    ========================= */
+
+    .paper-wrap {
+      position: relative;
+
+      width: 515px;
+
+      transform: translateY(25px) scale(0.92);
+      opacity: 0;
+
+      transition:
+        transform 0.42s cubic-bezier(.18,.8,.25,1),
+        opacity 0.32s ease;
+    }
+
+    .letter-overlay.active .paper-wrap {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .paper-image {
+      width: 100%;
+      height: auto;
+      display: block;
+
+      filter: drop-shadow(13px 17px 10px rgba(70, 60, 60, 0.28));
+    }
+
+
+    /* =========================
+       LETTER TEXT
+    ========================= */
+
+    .paper-text {
+      position: absolute;
+
+      left: 11%;
+      right: 11%;
+
+      top: 15%;
+      bottom: 11%;
+
+      color: #4f4855;
+
+      overflow-y: auto;
+
+      padding-right: 8px;
+
+      font-size: 18px;
+      line-height: 1.96;
+
+      scrollbar-width: thin;
+      scrollbar-color: rgba(90,81,97,.35) transparent;
+    }
+
+    .paper-text h2 {
+      font-size: 27px;
+      font-weight: 500;
+      margin-bottom: 18px;
+    }
+
+    .paper-text p {
+      margin-bottom: 14px;
+    }
+
+
+    /* =========================
+       CLOSE BUTTON
+    ========================= */
+
+    .close-letter {
+      position: absolute;
+
+      top: 16px;
+      right: 18px;
+
+      width: 32px;
+      height: 32px;
+
+      border: 0;
+      background: rgba(255,255,255,0.55);
+
+      border-radius: 50%;
+
+      font-family: Arial, sans-serif;
+      font-size: 19px;
+
+      color: #5A5161;
+
+      cursor: pointer;
+
+      opacity: 0.65;
+
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .close-letter:hover {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+
+    /* =========================
+       BOTTOM
+    ========================= */
+
+    .bottom-location {
+      position: absolute;
+      bottom: 32px;
+
+      font-size: 17px;
+      line-height: 1.2;
+
+      z-index: 20;
+    }
+
+    .bottom-location strong {
+      display: block;
+      font-weight: 600;
+    }
+
+    .bella-bottom {
+      left: 38px;
+    }
+
+    .alex-bottom {
+      right: 38px;
+      text-align: right;
+    }
+
+    .bottom-center {
+      position: absolute;
+
+      left: 50%;
+      bottom: 38px;
+
+      width: 47%;
+
+      transform: translateX(-50%);
+
+      display: flex;
+      align-items: center;
+      gap: 25px;
+
+      z-index: 20;
+    }
+
+    .bottom-line {
+      flex: 1;
+      height: 1px;
+
+      background: rgba(90,81,97,0.45);
+    }
+
+    .globe-icon {
+      width: 36px;
+      opacity: 0.45;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1250px) {
+      .letter-grid {
+        column-gap: 70px;
+      }
+
+      .letter-item img {
+        width: 280px;
+      }
+
+      .paper-wrap {
+        width: 465px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <main class="page" id="page">
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="top-nav">
+
+      <a href="index.html" class="back-link">
+        <img src="back.png" alt="Back">
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <a href="map.html" class="nav-link">our map</a>
+      <a href="letters.html" class="nav-link">open when...</a>
+      <a href="dates.html" class="nav-link">dates</a>
+
+    </nav>
+
+
+
+    <!-- LETTERS -->
+
+    <section class="letter-grid">
+
+      <button
+        class="letter-item"
+        data-title="Open when we argued"
+        data-letter="argued"
+      >
+        <img src="argued.png" alt="Open when we argued">
+      </button>
+
+
+      <button
+        class="letter-item"
+        data-title="Open when you're feeling down"
+        data-letter="down"
+      >
+        <img src="down.png" alt="Open when you're feeling down">
+      </button>
+
+
+      <button
+        class="letter-item"
+        data-title="Open when you miss me"
+        data-letter="miss"
+      >
+        <img src="miss.png" alt="Open when you miss me">
+      </button>
+
+
+      <button
+        class="letter-item"
+        data-title="Open when you're mad"
+        data-letter="mad"
+      >
+        <img src="mad.png" alt="Open when you're mad">
+      </button>
+
+
+      <button
+        class="letter-item"
+        data-title="Open when you're sick"
+        data-letter="sick"
+      >
+        <img src="sick.png" alt="Open when you're sick">
+      </button>
+
+
+      <button
+        class="letter-item"
+        data-title="Open when you can't sleep"
+        data-letter="sleep"
+      >
+        <img src="sleep.png" alt="Open when you can't sleep">
+      </button>
+
+    </section>
+
+
+
+    <!-- POPUP -->
+
+    <div class="letter-overlay" id="letter-overlay">
+
+      <div class="paper-wrap" id="paper-wrap">
+
+        <img
+          src="paper.png"
+          class="paper-image"
+          alt=""
+        >
+
+        <button
+          class="close-letter"
+          id="close-letter"
+          aria-label="Close letter"
+        >
+          ×
+        </button>
+
+        <div
+          class="paper-text"
+          id="paper-text"
+        ></div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- BOTTOM -->
+
+    <div class="bottom-location bella-bottom">
+      <strong>Bella's location</strong>
+      <span>37.5374° N, 127.0590° E</span>
+    </div>
+
+
+    <div class="bottom-center">
+
+      <div class="bottom-line"></div>
+
+      <img
+        src="globe.png"
+        class="globe-icon"
+        alt=""
+      >
+
+      <div class="bottom-line"></div>
+
+    </div>
+
+
+    <div class="bottom-location alex-bottom">
+      <strong>Alex's location</strong>
+      <span>39.0334° N, 77.1091° W</span>
+    </div>
+
+
+  </main>
+
+
+  <script>
+
+    const letters = {
+
+      argued: `
+
+        <p>Hi,</p>
+
+        <p>
+          If you’re reading this, we probably just argued, and maybe right now you’re annoyed at me, hurt, frustrated, or just don’t really want to talk to me.
+        </p>
+
+        <p>
+          I don’t know what we argued about or whether I was right or wrong. But no matter what happened, please know I still love you.
+
+        </p>
+
+        <p>
+          Sometimes, when I’m upset, I tend to say harsh things that I don’t actually mean. If that made you think I care more about winning the argument than I care about you, it’s simply not true. 
+
+        </p>
+
+        <p>
+          Remember, I love you more than anything else, even right now. Just text me back, okay? 
+        </p>
+
+      `,
+
+
+      down: `
+
+        <p>Awww... Why are you feeling down?</p>
+
+        <p>
+          I’m assuming it’s either because of school, parents, friends, or long-distance. 
+
+        </p>
+
+        <p>
+          I can’t be there in person right now to help you feel better, but you can always call me! 
+
+        </p>
+
+        <p>
+          Just hit the call button on Instagram or Snapchat, and I’ll try my BEST to pick up (as long as it’s not school time). 
+        </p>
+
+        <p>
+            Please don’t try to carry the burden alone when I’m always here to support you. 
+        </p>
+
+        <p>I love youuu, and I’ll talk to you later on the phone!</p>
+      `,
+
+
+      miss: `
+
+        <p>Hey...</p>
+
+        <p>
+          If you’re reading this, you’re probably missing me. Well... I miss you more :( 
+        </p>
+
+        <p>
+          At this point, we have less than 95 days till we see each other! That may feel like a long duration of time, but it’s basically negligible compared to the time we will be spending together in the future!! 
+        </p>
+
+        <p>
+          Just focus on what you have to do right now, and hopefully time will go by quickly. 
+        </p>
+
+        <p>On the bright side, we have our special day planned on Christmas 😉 </p>
+
+        <p>Until then, let’s both focus on the present. You can always call and text mee! </p>
+      `,
+
+
+      mad: `
+
+        <p>Hi Alex,</p>
+
+        <p>
+          I don’t know what happened, but I’m guessing something seriously pissed you off. Maybe it’s school, family, college prep, friends, or just one of those days where everything feels like too much.
+        </p>
+
+        <p>
+          You don’t have to immediately calm down or pretend you’re okay. Be mad. Complain. Rant to me about it. I’ll listen and agree with you.
+        </p>
+
+        <p>
+          I just wish I could be there right now to hug you and distract you until you feel a little better.
+
+        </p>
+
+        <p>
+          Whatever happened, it’s one bad moment. You’ll figure it out like you always do.
+
+        </p>
+
+        <p>I’m always on your side.</p>
+      `,
+
+
+      sick: `
+
+        <p>Sick? I got you!</p>
+
+        <p>
+          Fever/body aches/ headache ⟶ Tylenol or ibuprofen
+          Sore throat ⟶ Tylenol or ibuprofen + throat lozenges
+          Stuffy nose ⟶ Saline nasal spray
+          Runny nose/sneezing ⟶ antihistamine (cetirizine or loratadine)
+          Dry cough ⟶ Dextromethorphan
+          Mucus/chest congestion ⟶ Guaifenesin + lots of water
+          Upset stomach/nausea ⟶ Bismuth subsalicylate 
+          Heartburn ⟶ Calcium carbonate
+          Diarrhea ⟶ Fluids/electrolytes
+        </p>
+
+        <p>
+          Bella says: drink water, eat something, sleep, and READ THE LABEL!
+          Also check the ingredients before combining medicines—many already contain acetaminophen, dextromethorphan, etc.
+        </p>
+
+      `,
+
+
+      sleep: `
+
+        <p>Hi Alex,</p>
+
+        <p>
+          Why are you still awake :(
+        </p>
+
+        <p>
+          I wish I were there so we could just cuddle and fall asleep next to me. But since I’m 11,000 km away right now, here’s a <a href="https://open.spotify.com/playlist/3pMwlngtSOcuEeHhkHLHbm?si=b08196456e904cc7">Spotify playlist</a> for a good night's sleep. 
+
+        </p>
+
+        <p>
+          Put your phone down after this, get comfy, close your eyes, and stop thinking about everything you have to do tomorrow. It can wait until morning.
+
+        </p>
+
+        <p>
+          I hope you have the sweetest dreams. Maybe dream about me while you’re at it.
+        </p>
+
+        <p>Goodnight, I love you so much!</p>
+      `
+
+    };
+
+
+    const page = document.getElementById("page");
+
+    const overlay =
+      document.getElementById("letter-overlay");
+
+    const paperWrap =
+      document.getElementById("paper-wrap");
+
+    const paperText =
+      document.getElementById("paper-text");
+
+    const closeButton =
+      document.getElementById("close-letter");
+
+    const letterButtons =
+      document.querySelectorAll(".letter-item");
+
+
+    /* OPEN */
+
+    letterButtons.forEach(button => {
+
+      button.addEventListener("click", () => {
+
+        const letterName =
+          button.dataset.letter;
+
+        paperText.innerHTML =
+          letters[letterName];
+
+        paperText.scrollTop = 0;
+
+        page.classList.add("letter-open");
+
+        overlay.classList.add("active");
+
+      });
+
+    });
+
+
+    /* CLOSE */
+
+    function closeLetter() {
+
+      overlay.classList.remove("active");
+
+      page.classList.remove("letter-open");
+
+    }
+
+
+    closeButton.addEventListener(
+      "click",
+      closeLetter
+    );
+
+
+    /* click outside paper */
+
+    overlay.addEventListener(
+      "click",
+      event => {
+
+        if (event.target === overlay) {
+          closeLetter();
+        }
+
+      }
+    );
+
+
+    /* ESC key */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (event.key === "Escape") {
+          closeLetter();
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>

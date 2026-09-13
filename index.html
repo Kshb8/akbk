@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Us</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <main class="home">
+
+    <!-- COUNTDOWN + CLOCKS -->
+    <section class="left-panel">
+
+      <div class="countdown">
+        <div id="countdown-days" class="countdown-number">96</div>
+        <div class="countdown-text">days until I see you</div>
+
+        <div class="divider"></div>
+
+        <div class="clocks">
+
+          <div class="clock">
+            <div class="city">Seoul</div>
+            <div id="seoul-date" class="clock-date">Sat 12 Sep</div>
+            <div id="seoul-time" class="clock-time">3:43 AM</div>
+          </div>
+
+          <div class="clock">
+            <div class="city">D.C.</div>
+            <div id="dc-date" class="clock-date">Fri 11 Sep</div>
+            <div id="dc-time" class="clock-time">2:43 PM</div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- APP BUTTONS -->
+    <nav class="apps">
+
+        <a class="app-button" href="map.html">
+            <img src="map.png" alt="Map icon">
+            <span>our map</span>
+        </a>
+
+        <a class="app-button" href="letters.html">
+            <img src="letter.png" alt="Letter icon">
+            <span>open when...</span>
+        </a>
+
+        <a class="app-button dates-button" href="dates.html">
+            <img src="dates.png" alt="Dates icon">
+            <span>dates</span>
+        </a>
+
+    </nav>
+
+
+    <!-- COORDINATES -->
+    <div class="location bella-location">
+      <strong>Bella's location</strong>
+      <span>37.5374° N, 127.0590° E</span>
+    </div>
+
+    <div class="location alex-location">
+      <strong>Alex's location</strong>
+      <span>39.0334° N, 77.1091° W</span>
+    </div>
+
+  </main>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Map</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: "EB Garamond", serif;
+      background: #eee7e1;
+      color: #5a5161;
+      overflow: hidden;
+    }
+
+    .page {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      min-width: 1100px;
+      min-height: 700px;
+    }
+
+    /* -------------------------
+       NAV
+    ------------------------- */
+
+    .top-nav {
+      position: absolute;
+      top: 32px;
+      left: 38px;
+
+      display: flex;
+      align-items: center;
+      gap: 42px;
+
+      z-index: 20;
+    }
+
+    .back-link {
+      display: flex;
+      align-items: center;
+    }
+
+    .back-link img {
+      width: 36px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nav-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(90, 81, 97, 0.45);
+      margin-left: -20px;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: #857986;
+
+      font-size: 17px;
+      font-style: italic;
+
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-link:hover {
+      opacity: 0.55;
+    }
+
+    /* -------------------------
+       MAP
+    ------------------------- */
+
+    .map-container {
+      position: absolute;
+
+      width: 78vw;
+      max-width: 1230px;
+
+      left: 50%;
+      top: 49%;
+
+      transform: translate(-50%, -50%);
+    }
+
+    .world-map {
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* -------------------------
+       LOCATION CARDS
+    ------------------------- */
+
+    .location-card {
+      position: absolute;
+
+      width: 195px;
+
+      padding: 18px 24px;
+
+      background: rgba(255, 255, 255, 0.62);
+
+      border: 1px solid rgba(255, 255, 255, 0.65);
+
+      border-radius: 18px;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow: 0 10px 20px rgba(70, 60, 70, 0.2);
+    }
+
+    .bella-card {
+      left: 13%;
+      top: 43%;
+    }
+
+    .alex-card {
+      right: 0%;
+      top: 42%;
+    }
+
+    .name {
+      font-size: 28px;
+      font-weight: 600;
+      line-height: 0.95;
+    }
+
+    .place {
+      font-size: 15px;
+      font-weight: 500;
+      margin-top: 4px;
+    }
+
+    .live-time {
+      font-size: 15px;
+      margin-top: 2px;
+    }
+
+    /* -------------------------
+       DISTANCE
+    ------------------------- */
+
+    .distance {
+      position: absolute;
+
+      left: 50%;
+      top: 80%;
+
+      transform: translate(-50%, -50%);
+
+      text-align: center;
+    }
+
+    .distance-km {
+      font-size: 44px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .distance-miles {
+      margin-top: 8px;
+
+      font-size: 21px;
+      font-weight: 600;
+    }
+
+    .small-line {
+      width: 38px;
+      height: 1px;
+
+      background: #5a5161;
+
+      margin: 12px auto 0;
+    }
+
+    /* -------------------------
+       BOTTOM
+    ------------------------- */
+
+    .bottom-location {
+      position: absolute;
+      bottom: 32px;
+
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .bottom-location strong {
+      display: block;
+      font-weight: 600;
+    }
+
+    .bella-bottom {
+      left: 38px;
+    }
+
+    .alex-bottom {
+      right: 38px;
+      text-align: right;
+    }
+
+    .bottom-center {
+      position: absolute;
+
+      left: 50%;
+      bottom: 38px;
+
+      width: 47%;
+
+      transform: translateX(-50%);
+
+      display: flex;
+      align-items: center;
+
+      gap: 25px;
+    }
+
+    .bottom-line {
+      flex: 1;
+
+      height: 1px;
+
+      background: rgba(90, 81, 97, 0.45);
+    }
+
+    .globe-icon {
+      width: 36px;
+      height: auto;
+
+      opacity: 0.45;
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <!-- NAV -->
+
+    <nav class="top-nav">
+
+      <a href="index.html" class="back-link">
+        <img src="back.png" alt="Back">
+      </a>
+
+      <div class="nav-divider"></div>
+
+      <a href="map.html" class="nav-link">our map</a>
+      <a href="letters.html" class="nav-link">open when...</a>
+      <a href="dates.html" class="nav-link">dates</a>
+
+    </nav>
+
+
+    <!-- MAP AREA -->
+
+    <section class="map-container">
+
+      <img
+        src="world.png"
+        class="world-map"
+        alt="World map"
+      >
+
+      <!-- route -->
+
+      <!-- bella -->
+
+      <div class="location-card bella-card">
+
+        <div class="name">Bella</div>
+
+        <div class="place">
+          Seoul, Korea
+        </div>
+
+        <div
+          class="live-time"
+          id="bella-time"
+        ></div>
+
+      </div>
+
+
+      <!-- alex -->
+
+      <div class="location-card alex-card">
+
+        <div class="name">Alex</div>
+
+        <div class="place">
+          Washington D.C., USA
+        </div>
+
+        <div
+          class="live-time"
+          id="alex-time"
+        ></div>
+
+      </div>
+
+
+      <!-- distance -->
+
+      <div class="distance">
+
+        <div class="distance-km">
+          11,149 km
+        </div>
+
+        <div class="distance-miles">
+          6,928 miles
+        </div>
+
+        <div class="small-line"></div>
+
+      </div>
+
+    </section>
+
+
+    <!-- BOTTOM LEFT -->
+
+    <div class="bottom-location bella-bottom">
+
+      <strong>Bella's location</strong>
+
+      <span>
+        37.5374° N, 127.0590° E
+      </span>
+
+    </div>
+
+
+    <!-- BOTTOM CENTER -->
+
+    <div class="bottom-center">
+
+      <div class="bottom-line"></div>
+
+      <img
+        src="globe.png"
+        class="globe-icon"
+        alt=""
+      >
+
+      <div class="bottom-line"></div>
+
+    </div>
+
+
+    <!-- BOTTOM RIGHT -->
+
+    <div class="bottom-location alex-bottom">
+
+      <strong>Alex's location</strong>
+
+      <span>
+        39.0334° N, 77.1091° W
+      </span>
+
+    </div>
+
+  </main>
+
+
+  <script>
+
+    function updateTimes() {
+
+      const now = new Date();
+
+
+      const seoulDate =
+        now.toLocaleDateString("en-GB", {
+          timeZone: "Asia/Seoul",
+          weekday: "short",
+          day: "2-digit",
+          month: "short"
+        });
+
+      const seoulTime =
+        now.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Seoul",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true
+        });
+
+
+      const dcDate =
+        now.toLocaleDateString("en-GB", {
+          timeZone: "America/New_York",
+          weekday: "short",
+          day: "2-digit",
+          month: "short"
+        });
+
+      const dcTime =
+        now.toLocaleTimeString("en-US", {
+          timeZone: "America/New_York",
+          hour: "numeric",
+          minute: "2-digit",
+          hour12: true
+        });
+
+
+      document.getElementById("bella-time").textContent =
+        seoulDate + " " + seoulTime;
+
+      document.getElementById("alex-time").textContent =
+        dcDate + " " + dcTime;
+    }
+
+
+    updateTimes();
+
+    setInterval(updateTimes, 30000);
+
+  </script>
+
+</body>
+</html>
