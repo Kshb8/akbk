@@ -580,36 +580,56 @@
        FOOTER CENTER
     ======================================== */
 
-    .footer-center {
+    .bottom-location {
+      position: absolute;
+      bottom: 32px;
+
+      font-size: 17px;
+      line-height: 1.2;
+
+      z-index: 20;
+    }
+
+    .bottom-location strong {
+      display: block;
+      font-weight: 600;
+    }
+
+    .bella-bottom {
+      left: 38px;
+    }
+
+    .alex-bottom {
+      right: 38px;
+      text-align: right;
+    }
+
+    .bottom-center {
       position: absolute;
 
       left: 50%;
-      bottom: 33px;
+      bottom: 38px;
 
-      width: 46%;
+      width: 47%;
 
       transform: translateX(-50%);
 
       display: flex;
       align-items: center;
+      gap: 25px;
 
-      gap: 20px;
+      z-index: 20;
     }
 
-    .footer-line {
+    .bottom-line {
       flex: 1;
-
       height: 1px;
 
-      background: rgba(90, 81, 97, 0.35);
+      background: rgba(90,81,97,0.45);
     }
 
     .globe-icon {
-      display: block;
-
-      width: 28px;
-      height: auto;
-
+      width: 36px;
       opacity: 0.45;
     }
 
